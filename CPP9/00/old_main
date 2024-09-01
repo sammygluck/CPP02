@@ -1,0 +1,88 @@
+int main(int argc, char **argv)
+{
+    if (argc != 2)
+    {
+        std::cerr << "Usage: " << argv[0] << " input.txt" << std::endl;
+        std::exit(1);
+    }
+
+    std::ifstream priceFile;
+    priceFile.open(CSV_FILE);
+    if (!priceFile)
+    {
+        std::cerr << "Error: couldn't open file " << CSV_FILE << std::endl;
+        std::exit(1);
+    }
+
+    //PROCESS CSV FILE
+    std::map<std::string, double> priceMap;
+    std::string line, date;
+    double value;
+
+    //skip header
+    std::getline(priceFile, line);
+
+    while (std::getline(priceFile, line))
+    {
+        std::istringstream iss(line);
+        std::string tempValue;
+
+        if (!std::getline(iss, date, ',') || !std::getline(iss, tempValue))
+        {
+            std::cerr << "Error: corrupted data in prices file" << std::endl;
+            continue; //skip corrupted lines
+        }
+        try
+        {
+            value = std::stod(tempValue); //convert string to double (this should be more elaborate, eventually make seperate function)
+            priceMap[date] = value;
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << "Error: invalid number encountered " << e.what() << std::endl;
+            continue;
+        }
+    }
+
+    //PROCESS OUR FILE
+    //check for header and skip
+
+    std::ifstream inputFile;
+    inputFile.open(argv[1]);
+    if (!inputFile)
+    {
+        std::cerr << "Error: couldn't open file " << argv[1] << std::endl;
+        std::exit(1); //any freeing of previous open file?
+    }
+    std::string inputLine, inputDate;
+    double inputValue;
+
+    std::getline(inputFile, inputLine);
+    while (std::getline(inputFile, inputLine))
+    {
+        //1. split line into components
+        std::istringstream iss(inputLine);
+        char delimiter;
+        if (!(iss >> inputDate >> delimiter >> inputValue) || delimiter != '|')
+        {
+            std::cerr << "Error: bad input => " << inputLine << std::endl;
+            continue;
+        }
+        //2. parse and validate components
+        std::string formattedDate;
+        if (!parseAndValidateDate(inputDate, formattedDate))
+        {
+            std::cerr << "Error: invalid date => " << inputDate << std::endl;
+            continue;
+        }
+        if (!validateValue(inputValue))
+        {
+            std::cerr << "Error: invalid value => " << inputValue << std::endl;
+            continue;
+        }
+
+        processValues(priceMap, formattedDate, inputValue);
+    }
+
+
+}

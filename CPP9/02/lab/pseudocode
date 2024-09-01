@@ -1,0 +1,31 @@
+/*
+main
+{
+    1.keep time in mind from begin
+    2. check if valid input amount
+    3. check for valid input
+    4. parse input
+        save it in list
+        save it in vector 
+    5. sort list
+    6. sort vector
+    7. print all necessary stuff
+}
+
+validate input
+check if all arguments until end are positive integers, if not return error
+
+save_to_list
+save_to_vector
+
+sort list
+{
+    
+}
+
+sort vector
+{
+
+}
+
+*/

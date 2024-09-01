@@ -1,0 +1,25 @@
+jacobsthal_hardcoded_index_adjusted = [0, 2, 4, 10, 20, 42, 84, 170, 340, 682, 1364, 2730, 5460];
+
+template<typename Container>
+jacobsthal_insertion(Container<int> &pend, Container<int> &main)
+{
+
+insert_index = 0;
+current_j = jacobsthal_hardcoded_index_adjusted[0];
+insert_count = 0;
+int i = 0;
+
+while (insert_count < pend.size())
+{
+    pend_value = pend[insert_index];
+    position_of_insert = lower_bound(main.begin(), main.end(), pend_value); //or something like this;
+    insert pend value into position of insert;
+    insert_count++;
+    if (insert_count = current_j + 1)
+        current_j = jacobsthal_hardcoded_index_adjusted[++i] < pend.size() - 1 ? jacobsthal_hardcoded..[i] : pend.size() - 1;
+        insert_index = current_j;
+    else
+        insert_index--;    
+}
+
+}
