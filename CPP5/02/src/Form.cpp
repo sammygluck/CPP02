@@ -12,17 +12,13 @@ Form::Form(std::string name, int signGrade, int execGrade): _name(name), _signed
         throw Form::GradeTooLowException();
 }
 
-Form::Form(const Form &other)
+Form::Form(const Form &other): _name(other._name), _signed(other._signed), _signGrade(other._signGrade), _execGrade(other._execGrade)
 {
-    *this = other; //again make sure this works well because most vars are a const
 }
 
 Form &Form::operator=(const Form &other)
 {
-    if (this != &other)
-    {
-        this->_signed = other._signed;
-    }
+    (void) other;
     return *this;
 }
 
@@ -41,12 +37,12 @@ bool Form::getSigned() const
     return this->_signed;
 }
 
-const int Form::getSignGrade() const
+int Form::getSignGrade() const
 {
     return this->_signGrade;
 }
 
-const int Form::getExecGrade() const
+int Form::getExecGrade() const
 {
     return this->_execGrade;
 }

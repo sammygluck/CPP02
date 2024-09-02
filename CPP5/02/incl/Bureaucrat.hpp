@@ -4,7 +4,9 @@
 #include <string>
 #include <exception>
 #include <iostream>
-#include <Form.hpp>
+#include "Form.hpp"
+
+class Form;
 
 class Bureaucrat
 {
