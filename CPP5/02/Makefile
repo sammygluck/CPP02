@@ -2,13 +2,13 @@
 ##FILES, SRC, OBJS##
 ####################
 
-NAME = form
+NAME = forms
 OBJS_DIR = objs
 SRCS_DIR = src
 
 INCL_DIR = incl
 
-FILES = main.cpp Bureaucrat.cpp Form.cpp
+FILES = main.cpp Bureaucrat.cpp AForm.cpp ShrubberyCreationForm.cpp RobotomyRequestForm.cpp PresidentialPardonForm.cpp
 SRCS = $(addprefix $(SRCS_DIR)/, $(FILES))
 OBJS = $(addprefix $(OBJS_DIR)/, $(FILES:.cpp=.o))
 

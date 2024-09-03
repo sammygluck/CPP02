@@ -2,13 +2,13 @@
 ##FILES, SRC, OBJS##
 ####################
 
-NAME = bureaucrat
+NAME = form
 OBJS_DIR = objs
 SRCS_DIR = src
 
 INCL_DIR = incl
 
-FILES = main.cpp Bureaucrat.cpp
+FILES = main.cpp Bureaucrat.cpp Form.cpp
 SRCS = $(addprefix $(SRCS_DIR)/, $(FILES))
 OBJS = $(addprefix $(OBJS_DIR)/, $(FILES:.cpp=.o))
 
@@ -44,4 +44,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re 
+.PHONY: all clean fclean re

@@ -2,7 +2,7 @@
 ##FILES, SRC, OBJS##
 ####################
 
-NAME = forms
+NAME = intern
 OBJS_DIR = objs
 SRCS_DIR = src
 
