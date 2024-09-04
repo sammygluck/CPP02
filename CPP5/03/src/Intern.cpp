@@ -1,4 +1,4 @@
-#include "Intern.hpp"
+#include "../incl/Intern.hpp"
 
 Intern::Intern()
 {
@@ -11,7 +11,7 @@ Intern::Intern(const Intern &other)
 
 Intern &Intern::operator=(const Intern &other)
 {
-    // (void)other; //to avoid warning
+    (void)other; //to avoid warning
     return *this;
 }
 

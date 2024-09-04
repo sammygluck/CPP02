@@ -10,6 +10,8 @@
 #include "PresidentialPardonForm.hpp"
 #include "Bureaucrat.hpp"
 
+class AForm;
+
 class Intern
 {
     public:
