@@ -16,7 +16,7 @@ int main()
 
     std::cout << "Serializing..." << std::endl;
     uintptr_t ptr = Serializer::serialize(&data);
-    std::cout << "Serialized value: " << ptr << std::endl;
+    // std::cout << "Serialized value: " << ptr << std::endl;
     std::cout << "Deserializing..." << std::endl;
     Data *dataPtr = Serializer::deserialize(ptr);
 

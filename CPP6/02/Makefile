@@ -2,13 +2,13 @@
 ##FILES, SRC, OBJS##
 ####################
 
-NAME = serialize
+NAME = identify
 OBJS_DIR = objs
 SRCS_DIR = src
 
 INCL_DIR = incl
 
-FILES = main.cpp Serializer.cpp Data.cpp
+FILES = main.cpp Base.cpp Functions.cpp 
 SRCS = $(addprefix $(SRCS_DIR)/, $(FILES))
 OBJS = $(addprefix $(OBJS_DIR)/, $(FILES:.cpp=.o))
 
