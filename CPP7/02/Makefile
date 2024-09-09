@@ -8,7 +8,7 @@ SRCS_DIR = src
 
 INCL_DIR = incl
 
-FILES = main.cpp
+FILES = main.cpp Bureaucrat.cpp
 SRCS = $(addprefix $(SRCS_DIR)/, $(FILES))
 OBJS = $(addprefix $(OBJS_DIR)/, $(FILES:.cpp=.o))
 

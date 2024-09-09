@@ -8,7 +8,7 @@ SRCS_DIR = src
 
 INCL_DIR = incl
 
-FILES = main.cpp Scalar.cpp
+FILES = main.cpp 
 SRCS = $(addprefix $(SRCS_DIR)/, $(FILES))
 OBJS = $(addprefix $(OBJS_DIR)/, $(FILES:.cpp=.o))
 

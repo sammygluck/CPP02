@@ -2,13 +2,13 @@
 ##FILES, SRC, OBJS##
 ####################
 
-NAME = span
+NAME = mutantstack
 OBJS_DIR = objs
 SRCS_DIR = src
 
 INCL_DIR = incl
 
-FILES = main.cpp Span.cpp
+FILES = main.cpp 
 SRCS = $(addprefix $(SRCS_DIR)/, $(FILES))
 OBJS = $(addprefix $(OBJS_DIR)/, $(FILES:.cpp=.o))
 
