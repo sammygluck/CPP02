@@ -6,8 +6,12 @@
 #include <cctype>
 #include <stdexcept>
 #include <climits>
+#include <cmath>
+#include <limits>
 #include <cfloat>
 #include <cstdlib>
+#include <sstream>
+#include <iomanip>
 
 #define INVALID 0
 #define CHAR 1

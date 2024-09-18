@@ -1,25 +1,26 @@
 #include "../incl/Scalar.hpp"
 
 
-//question: do we need all of these constructors and destructors?
-ScalarConverter::ScalarConverter()
-{
-}
+// //question: do we need all of these constructors and destructors?
+//answer: since it can't be instantiated it isn't needed.
+// ScalarConverter::ScalarConverter()
+// {
+// }
 
-ScalarConverter::~ScalarConverter()
-{
-}
+// ScalarConverter::~ScalarConverter()
+// {
+// }
 
-ScalarConverter::ScalarConverter(const ScalarConverter &copy)
-{
-    *this = copy;
-}
+// ScalarConverter::ScalarConverter(const ScalarConverter &copy)
+// {
+//     *this = copy;
+// }
 
-ScalarConverter &ScalarConverter::operator=(const ScalarConverter &copy)
-{
-    (void)copy;
-    return *this;
-}
+// ScalarConverter &ScalarConverter::operator=(const ScalarConverter &copy)
+// {
+//     (void)copy;
+//     return *this;
+// }
 
 void ScalarConverter::convert(std::string str)
 {
@@ -112,13 +113,11 @@ void ScalarConverter::_charToOthers(std::string str)
 
 void ScalarConverter::_intToOthers(std::string str)
 {
-    int value;
+    std::stringstream ss(str);
+    long value;
+    ss >> value;
 
-    try
-    {
-        value = strtol(str.c_str(), NULL, 10);
-    }
-    catch(const std::invalid_argument& e)
+    if (ss.fail() || !ss.eof() || value < std::numeric_limits<int>::min() || value > std::numeric_limits<int>::max())
     {
         std::cout << "char: impossible" << std::endl;
         std::cout << "int: overflow" << std::endl;
@@ -126,42 +125,28 @@ void ScalarConverter::_intToOthers(std::string str)
         std::cout << "double: impossible" << std::endl;
         return;
     }
-    catch(const std::out_of_range& e)
-    {
+    
+    if (value < std::numeric_limits<char>::min() || value > std::numeric_limits<char>::max())
         std::cout << "char: impossible" << std::endl;
-        std::cout << "int: overflow" << std::endl;
-        std::cout << "float: impossible" << std::endl;
-        std::cout << "double: impossible" << std::endl;
-        return;
-    }
-
-    if (std::isprint(value))
-        std::cout << "char: '" << static_cast<char>(value) << "'" << std::endl;
+    else if (isprint(static_cast<char>(value)))
+        std::cout << "char: '" << static_cast<char>(value) << "'" << std::endl; 
     else
-        std::cout << "char: non displayable" << std::endl;
+        std::cout << "char: Non displayable" << std::endl;
+
     std::cout << "int: " << value << std::endl;
-    std::cout << "float: " << static_cast<float>(value) << ".0f" << std::endl;
-    std::cout << "double: " << static_cast<double>(value) << ".0" << std::endl;    
+
+    std::cout << "float: " << std::fixed << std::setprecision(1) << static_cast<float>(value) << "f" << std::endl;
+    std::cout << "double: " << std::fixed << std::setprecision(1) << static_cast<double>(value) << std::endl;    
 }
 
 void ScalarConverter::_floatToOthers(std::string str)
 {
     std::string value_string = str.substr(0, str.size() - 1);
     float value;
+    std::stringstream ss(value_string);
+    ss >> value;
 
-    try
-    {
-        value = strtof(value_string.c_str(), NULL);
-    }
-    catch(const std::invalid_argument& e)
-    {
-        std::cout << "char: impossible" << std::endl;
-        std::cout << "int: impossible" << std::endl;
-        std::cout << "float: overflow" << std::endl;
-        std::cout << "double: impossible" << std::endl;
-        return;
-    }
-    catch(const std::out_of_range& e)
+    if (ss.fail() || !ss.eof())
     {
         std::cout << "char: impossible" << std::endl;
         std::cout << "int: impossible" << std::endl;
@@ -170,74 +155,64 @@ void ScalarConverter::_floatToOthers(std::string str)
         return;
     }
 
-    int intValue = static_cast<int>(value);
-    if (std::isprint(intValue))
-        std::cout << "char: '" << static_cast<char>(intValue) << "'" << std::endl;
+    if (std::isnan(value) || std::isinf(value) || value < std::numeric_limits<char>::min() || value > std::numeric_limits<char>::max())
+        std::cout << "char: impossible" << std::endl;
+    else if (isprint(static_cast<char>(value)))
+        std::cout << "char: '" << static_cast<char>(value) << "'" << std::endl;
     else
-        std::cout << "char: non displayable" << std::endl;
-    if(value > static_cast<float>(INT_MAX) || value < static_cast<float>(INT_MIN))
-        std::cout << "int: overflow" << std::endl;
+        std::cout << "char: Non displayable" << std::endl;
+
+    if (std::isnan(value) || std::isinf(value) || value < std::numeric_limits<int>::min() || value > std::numeric_limits<int>::max())
+        std::cout << "int: impossible" << std::endl;
     else
-        std::cout << "int: " << intValue << std::endl;
-    std::cout << "float: " << value;
-    if (value - intValue == 0)
-        std::cout << ".0f" << std::endl;
-    else
-        std::cout << "f" << std::endl;
-    std::cout << "double: " << static_cast<double>(value);
-    if (static_cast<double>(value) - intValue == 0)
-        std::cout << ".0";
-    std::cout << std::endl;    
+        std::cout << "int: " << static_cast<int>(value) << std::endl;
+
+    std::cout << "float: " << std::fixed << std::setprecision(1) << value << "f" << std::endl;
+
+    double doubleValue = static_cast<double>(value);
+    std::cout << "double: " << std::fixed << std::setprecision(1) << doubleValue << std::endl;
+ 
 }
 
 void ScalarConverter::_doubleToOthers(std::string str)
 {
-    double value;
+    std::stringstream ss(str);
+    double doubleValue;
+    ss >> doubleValue;
 
-    try
-    {
-        value = strtod(str.c_str(), NULL);
-    }
-    catch(const std::invalid_argument& e)
+    if (ss.fail() || !ss.eof())
     {
         std::cout << "char: impossible" << std::endl;
         std::cout << "int: impossible" << std::endl;
-        std::cout << "float: impossible" << std::endl;
-        std::cout << "double: overflow" << std::endl;
+        std::cout << "float: invalid input" << std::endl;
+        std::cout << "double: invalid input" << std::endl;
         return;
     }
-    catch(const std::out_of_range& e)
-    {
+
+    // Convert to char
+    if (std::isnan(doubleValue) || std::isinf(doubleValue) || doubleValue < std::numeric_limits<char>::min() || doubleValue > std::numeric_limits<char>::max())
         std::cout << "char: impossible" << std::endl;
+    else if (isprint(static_cast<char>(doubleValue)))
+        std::cout << "char: '" << static_cast<char>(doubleValue) << "'" << std::endl;
+    else
+        std::cout << "char: Non displayable" << std::endl;
+
+    // Convert to int
+    if (std::isnan(doubleValue) || std::isinf(doubleValue) || doubleValue < std::numeric_limits<int>::min() || doubleValue > std::numeric_limits<int>::max())
         std::cout << "int: impossible" << std::endl;
+    else
+        std::cout << "int: " << static_cast<int>(doubleValue) << std::endl;
+
+    // Convert to float
+    if (doubleValue < -std::numeric_limits<float>::max() || doubleValue > std::numeric_limits<float>::max())
         std::cout << "float: impossible" << std::endl;
-        std::cout << "double: overflow" << std::endl;
-        return;
-    }
-    int intVal = static_cast<int>(value);
-    if (std::isprint(intVal))
-        std::cout << "char: '" << static_cast<char>(intVal) << "'" << std::endl;
-    else
-        std::cout << "char: non displayable" << std::endl;
-    if(value > static_cast<double>(INT_MAX) || value < static_cast<double>(INT_MIN))
-        std::cout << "int: overflow" << std::endl;
-    else
-        std::cout << "int: " << intVal << std::endl;
-    if(value > static_cast<double>(FLT_MAX) || value < static_cast<double>(FLT_MIN)) //double check this part
-        std::cout << "float: overflow" << std::endl;
     else
     {
-        std::cout << "float: " << static_cast<float>(value);
-        if (value - intVal == 0)
-            std::cout << ".0f";
-        else
-            std::cout << "f";
-        std::cout << std::endl;
+        float floatValue = static_cast<float>(doubleValue);
+        std::cout << "float: " << std::fixed << std::setprecision(1) << floatValue << "f" << std::endl;
     }
-    std::cout << "double: " << value;
-    if (value - intVal == 0)
-        std::cout << ".0";
-    std::cout << std::endl;
+
+    std::cout << "double: " << std::fixed << std::setprecision(1) << doubleValue << std::endl;
 }
 
 void ScalarConverter::_floatInfNanToOthers(std::string str)

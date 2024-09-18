@@ -10,13 +10,13 @@ int main()
     {
         // Create some Bureaucrats with different grades
         Bureaucrat lowRank("Low Rank", 137);
-        Bureaucrat midRank("Mid Rank", 45);
+        Bureaucrat midRank("Mid Rank", 44);
         Bureaucrat highRank("High Rank", 5);
 
         // Create different forms
         PresidentialPardonForm presidentialForm("Alice");
-        RobotomyRequestForm robotomyForm("Bob");
         ShrubberyCreationForm shrubberyForm("Garden");
+        RobotomyRequestForm robotomyForm("Bob");
 
         // Test signing and executing the forms with different Bureaucrats
         std::cout << "\n--- Testing Shrubbery Creation Form ---\n";

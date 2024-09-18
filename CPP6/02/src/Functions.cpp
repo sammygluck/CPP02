@@ -5,7 +5,7 @@
 
 Base* generate(void)
 {
-    srand(time(NULL)); //must I prefix with std::?
+    srand(time(NULL)); 
     int randomNum = rand() % 3;
 
     switch (randomNum)
